@@ -5,4 +5,4 @@ if __name__ == '__main__':
     for i in range(1, 21):
         c = Cluster.cluster()
         c.printf('ClustersText//cluster{}.txt'.format(i))
-        c.printfJPG('ClustersPictures//cluster{}.jpg'.format(i))
+        c.printfJPG('ClustersPictures//cluster{}.tiff'.format(i))

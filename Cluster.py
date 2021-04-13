@@ -19,6 +19,8 @@ class cluster:
 
         self.matrix = np.zeros((80, 100), dtype=int)
         self.countOfColor = [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+
+        # массив девяток
         arr = []
         nonaryFabric = nf.NonaryFabric()
 
@@ -117,7 +119,6 @@ class cluster:
 
         # приписываем крайний правый(сотый) столбец цветов
         self.matrix = np.insert(self.matrix, 99, self.arrayOfRemainderColors, axis=1)
-        print()
 
     # получение матрицу цветов из матрицы девяток
     @staticmethod
@@ -163,12 +164,35 @@ class cluster:
 
     # вывод в картинку
     def printfJPG(self, filePath):
-        image = Image.new('RGB', (80, 100), 'white')
+        image = Image.new('RGB', (1296, 1128), 'black')
         iDraw = ImageDraw.Draw(image)
+        row = -1
         for i in range(80):
+            if i % 8 == 0:
+                row += 1
             for j in range(100):
-                r = 255 * (self.matrix[i][j] // 2 // 2)
-                g = 255 * (self.matrix[i][j] // 2 % 2)
-                b = 255 * (self.matrix[i][j] % 2)
-                iDraw.point((i, j), (r, g, b))
+                for w in range(8):
+                    for h in range(8):
+                        iDraw.point((50 + 12 * j + w, 50 + 12 * i + h + 8 * row), self.NUMtoRGB(self.matrix[i][j]))
+
         image.save(filePath)
+
+    # перевод числа в цвет
+    @staticmethod
+    def NUMtoRGB(num):
+        if num == 0:
+            return 255, 0, 0
+        elif num == 1:
+            return 255, 191, 0
+        elif num == 2:
+            return 127, 255, 0
+        elif num == 3:
+            return 0, 255, 63
+        elif num == 4:
+            return 0, 255, 255
+        elif num == 5:
+            return 0, 63, 255
+        elif num == 6:
+            return 127, 0, 255
+        elif num == 7:
+            return 255, 0, 191
