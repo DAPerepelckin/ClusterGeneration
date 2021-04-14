@@ -163,7 +163,7 @@ class cluster:
         np.savetxt(filePath, self.matrix, '%1d', delimiter='')
 
     # вывод в картинку
-    def printfJPG(self, filePath):
+    def printfTIFF(self, filePath):
         image = Image.new('RGB', (1296, 1128), 'black')
         iDraw = ImageDraw.Draw(image)
         row = -1
@@ -175,6 +175,17 @@ class cluster:
                     for h in range(8):
                         iDraw.point((50 + 12 * j + w, 50 + 12 * i + h + 8 * row), self.NUMtoRGB(self.matrix[i][j]))
 
+        image.save(filePath)
+
+    # вывод палитры
+    def printColors(self, filePath):
+        image = Image.new('RGB', (220, 158), 'black')
+        iDraw = ImageDraw.Draw(image)
+        for i in range(8):
+            for w in range(8):
+                for h in range(8):
+                    iDraw.point((50 + 16 * i + w, 50 + h), self.NUMtoRGB(i))
+            iDraw.text((50 + 16 * i, 70), '{}'.format(i), (255, 255, 255))
         image.save(filePath)
 
     # перевод числа в цвет
